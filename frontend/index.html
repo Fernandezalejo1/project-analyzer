@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Analyzer — AI-Powered Auditor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">🔍</span>
+                <span class="logo-text">ProjectAnalyzer</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-section="home">
+                <span class="nav-icon">🏠</span> Home
+            </a>
+            <a href="#" class="nav-item" data-section="architecture">
+                <span class="nav-icon">📐</span> Architecture
+            </a>
+            <a href="#" class="nav-item" data-section="security">
+                <span class="nav-icon">🔐</span> Security
+            </a>
+            <a href="#" class="nav-item" data-section="vulnerabilities">
+                <span class="nav-icon">🛡️</span> Vulnerabilities
+            </a>
+            <a href="#" class="nav-item" data-section="quality">
+                <span class="nav-icon">📊</span> Code Quality
+            </a>
+            <a href="#" class="nav-item" data-section="dependencies">
+                <span class="nav-icon">📦</span> Dependencies
+            </a>
+            <a href="#" class="nav-item" data-section="performance">
+                <span class="nav-icon">⚡</span> Performance
+            </a>
+            <a href="#" class="nav-item" data-section="git">
+                <span class="nav-icon">📈</span> Git History
+            </a>
+            <a href="#" class="nav-item" data-section="ai">
+                <span class="nav-icon">🤖</span> AI Analysis
+            </a>
+            <a href="#" class="nav-item" data-section="docs">
+                <span class="nav-icon">📝</span> Documentation
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="version">v0.1.0</div>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+    <main class="main-content">
+
+        <!-- ─── TOP BAR ─── -->
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <h1 class="page-title" id="pageTitle">Project Analyzer</h1>
+            <div class="topbar-actions">
+                <button class="btn btn-primary" id="scanBtn" onclick="showScanModal()">
+                    🔍 Scan Project
+                </button>
+            </div>
+        </header>
+
+        <!-- ─── HOME / SCAN SECTION ─── -->
+        <section class="section" id="section-home">
+            <div class="hero">
+                <div class="hero-content">
+                    <h2>🔍 AI-Powered Project Auditor</h2>
+                    <p>Analyze your software project for architecture, security, vulnerabilities, code quality, performance, and more.</p>
+
+                    <div class="scan-form">
+                        <div class="input-group">
+                            <label for="projectPath">Local Project Path</label>
+                            <input type="text" id="projectPath" placeholder="/path/to/your/project or C:\Users\..." class="input-field">
+                        </div>
+                        <div class="input-group">
+                            <label>— or —</label>
+                        </div>
+                        <div class="input-group">
+                            <label for="gitUrl">GitHub Repository URL</label>
+                            <input type="text" id="gitUrl" placeholder="https://github.com/user/repo" class="input-field">
+                        </div>
+                        <button class="btn btn-primary btn-large" id="startScanBtn" onclick="startAnalysis()">
+                            🚀 Start Full Analysis
+                        </button>
+                        <button class="btn btn-secondary" onclick="startQuickScan()">
+                            ⚡ Quick Security Scan
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scanning animation -->
+            <div class="scanning-overlay" id="scanningOverlay" style="display:none;">
+                <div class="scanning-animation">
+                    <div class="scanner-ring"></div>
+                    <div class="scanner-ring delay-1"></div>
+                    <div class="scanner-ring delay-2"></div>
+                    <div class="scanner-icon">🔍</div>
+                </div>
+                <h3 id="scanStatus">Scanning project...</h3>
+                <p id="scanDetail">Analyzing architecture and dependencies</p>
+            </div>
+        </section>
+
+        <!-- ─── RESULTS SECTIONS ─── -->
+        <section class="section results-section" id="section-results" style="display:none;">
+
+            <!-- Executive Summary -->
+            <div class="executive-summary" id="executiveSummary">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Category Scores -->
+            <div class="scores-grid" id="scoresGrid">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Priorities -->
+            <div class="priorities-container" id="prioritiesContainer">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Architecture Section -->
+        <section class="section detail-section" id="section-architecture" style="display:none;">
+            <div class="section-header">
+                <h2>📐 Architecture Analysis</h2>
+            </div>
+            <div id="architectureContent"></div>
+        </section>
+
+        <!-- Security Section -->
+        <section class="section detail-section" id="section-security" style="display:none;">
+            <div class="section-header">
+                <h2>🔐 Security Scan</h2>
+            </div>
+            <div id="securityContent"></div>
+        </section>
+
+        <!-- Vulnerabilities Section -->
+        <section class="section detail-section" id="section-vulnerabilities" style="display:none;">
+            <div class="section-header">
+                <h2>🛡️ Vulnerability Analysis</h2>
+            </div>
+            <div id="vulnerabilitiesContent"></div>
+        </section>
+
+        <!-- Code Quality Section -->
+        <section class="section detail-section" id="section-quality" style="display:none;">
+            <div class="section-header">
+                <h2>📊 Code Quality</h2>
+            </div>
+            <div id="qualityContent"></div>
+        </section>
+
+        <!-- Dependencies Section -->
+        <section class="section detail-section" id="section-dependencies" style="display:none;">
+            <div class="section-header">
+                <h2>📦 Dependencies</h2>
+            </div>
+            <div id="dependenciesContent"></div>
+        </section>
+
+        <!-- Performance Section -->
+        <section class="section detail-section" id="section-performance" style="display:none;">
+            <div class="section-header">
+                <h2>⚡ Performance</h2>
+            </div>
+            <div id="performanceContent"></div>
+        </section>
+
+        <!-- Git Section -->
+        <section class="section detail-section" id="section-git" style="display:none;">
+            <div class="section-header">
+                <h2>📈 Git History</h2>
+            </div>
+            <div id="gitContent"></div>
+        </section>
+
+        <!-- AI Section -->
+        <section class="section detail-section" id="section-ai" style="display:none;">
+            <div class="section-header">
+                <h2>🤖 AI Analysis</h2>
+            </div>
+            <div id="aiContent"></div>
+        </section>
+
+        <!-- Documentation Section -->
+        <section class="section detail-section" id="section-docs" style="display:none;">
+            <div class="section-header">
+                <h2>📝 Generated Documentation</h2>
+            </div>
+            <div id="docsContent"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
