@@ -2,9 +2,17 @@
 
 from __future__ import annotations
 
+import io
 import json
+import os
 import sys
 from pathlib import Path
+
+# Fix Windows console encoding for emoji output
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+    os.environ.setdefault("PYTHONIOENCODING", "utf-8")
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -102,13 +110,13 @@ def cli_main():
     # Save report
     output_file = Path(project_path) / "analysis-report.json"
     report_data = result.model_dump()
-    output_file.write_text(json.dumps(report_data, indent=2, default=str))
+    output_file.write_text(json.dumps(report_data, indent=2, default=str), encoding="utf-8")
     print(f"\n📄 Full report saved to: {output_file}")
 
     # Also save a markdown version
     md_report = _generate_markdown_report(result)
     md_file = Path(project_path) / "analysis-report.md"
-    md_file.write_text(md_report)
+    md_file.write_text(md_report, encoding="utf-8")
     print(f"📝 Markdown report saved to: {md_file}")
 
 

@@ -105,7 +105,7 @@ class AIAnalyzer:
             suggestions.append(
                 "The monolith is large. Consider identifying bounded contexts "
                 "and splitting into domain-driven modules or services."
-            ))
+            )
 
         # Too many languages
         if len(arch.languages_detected) > 4:

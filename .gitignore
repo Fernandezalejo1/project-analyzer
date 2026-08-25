@@ -8,6 +8,9 @@ build/
 .venv/
 venv/
 *.egg
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Environment
 .env
@@ -19,14 +22,20 @@ venv/
 .vscode/
 *.swp
 *.swo
+*~
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Analysis outputs
 analysis-report.json
 analysis-report.md
 
-# Node (if frontend deps added later)
+# Node
 node_modules/
+
+# Logs
+*.log
+npm-debug.log*

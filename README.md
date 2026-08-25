@@ -1,85 +1,116 @@
 # 🔍 Project Analyzer — AI-Powered Software Auditor
 
-An intelligent project analysis tool that performs a complete audit of your software project: architecture, security, vulnerabilities, code quality, dependencies, performance, and more.
+> **Scan any codebase in seconds.** Get a complete audit of architecture, security, vulnerabilities, code quality, dependencies, performance — with an AI-powered executive summary and prioritized action items.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688.svg)](https://fastapi.tiangolo.com/)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)](#testing)
+[![Docker](https://img.shields.io/badge/docker-ready-2496ED.svg)](#docker)
+
+---
+
+## 📸 Screenshots
+
+> 🚀 **Try it live:** Run `docker compose up -d --build` and open [http://localhost:8080](http://localhost:8080)
+
+<!-- Add screenshots here -->
+<!-- ![Dashboard](docs/screenshots/01-dashboard.png) -->
+<!-- ![Security Scan](docs/screenshots/02-security.png) -->
+<!-- ![Executive Report](docs/screenshots/03-executive-report.png) -->
+
+---
 
 ## ✨ Features
 
-| Module | Description |
+| Module | What it does |
 |--------|-------------|
-| 📐 Architecture | Detects languages, frameworks, project type, generates architecture map |
-| 📦 Dependencies | Scans package.json, requirements.txt, Cargo.toml, pom.xml, go.mod, etc. |
-| 🔐 Security | Detects leaked secrets, API keys, credentials, .env files, certificates |
-| 🛡️ Vulnerabilities | SQL Injection, XSS, CSRF, Command Injection, Path Traversal, SSRF, etc. |
-| 📊 Code Quality | Cyclomatic complexity, duplication, dead code, maintainability, technical debt |
-| 📈 Git History | Large commits, secrets in history, abandoned branches, contributor stats |
-| ⚡ Performance | N+1 queries, blocking I/O, expensive loops, memory issues, heavy files |
-| 🤖 AI Analysis | Architecture recommendations, scalability concerns, priority actions |
-| 📝 Documentation | Auto-generates README, architecture diagrams (Mermaid), onboarding guide |
-| 📋 Executive Report | 0-100 score with category breakdown and prioritized action items |
+| 📐 **Architecture** | Detects languages, frameworks, project type; generates architecture map |
+| 📦 **Dependencies** | Scans `package.json`, `requirements.txt`, `Cargo.toml`, `pom.xml`, `go.mod`, and more |
+| 🔐 **Security** | Detects leaked secrets, API keys, credentials, `.env` files, certificates |
+| 🛡️ **Vulnerabilities** | SQL Injection, XSS, CSRF, Command Injection, Path Traversal, SSRF |
+| 📊 **Code Quality** | Cyclomatic complexity, duplication, dead code, maintainability, technical debt |
+| 📈 **Git History** | Large commits, secrets in history, abandoned branches, contributor stats |
+| ⚡ **Performance** | N+1 queries, blocking I/O, expensive loops, memory issues, heavy files |
+| 🤖 **AI Analysis** | Architecture recommendations, scalability concerns, priority actions |
+| 📝 **Documentation** | Auto-generates README, architecture diagrams (Mermaid), onboarding guide |
+| 📋 **Executive Report** | 0-100 score with category breakdown and prioritized action items |
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Python 3.11+
-- Git (for git history analysis and cloning repos)
+- **Python 3.11+**
+- **Git** (for git history analysis and cloning repos)
 
-### Backend Setup
+### Option 1: Run Locally
 
 ```bash
+# Clone the repo
+git clone https://github.com/Fernandezalejo1/project-analyzer.git
+cd project-analyzer
+
+# Backend
 cd backend
 pip install -r requirements.txt
 ```
 
-### Running the CLI
-
+**CLI usage** — analyze any project:
 ```bash
-# Analyze a local project
+# Local project
 python -m app.main /path/to/your/project
 
-# Analyze a GitHub repo (clones it automatically)
+# GitHub repo (clones automatically)
 python -m app.main https://github.com/user/repo
 
-# The CLI generates two reports:
-#   analysis-report.json  (full data)
+# Generates two reports:
+#   analysis-report.json  (full structured data)
 #   analysis-report.md    (human-readable markdown)
 ```
 
-### Running the Web UI
-
-**Terminal 1 — API Server:**
+**API server** — for the web dashboard:
 ```bash
-cd backend
 python -m app.main serve
 # API runs at http://localhost:8000
 # Swagger docs at http://localhost:8000/docs
 ```
 
-**Terminal 2 — Frontend:**
+**Frontend** — open directly or serve:
 ```bash
-# Simply open frontend/index.html in your browser
-# No build tools needed!
-
+cd ../frontend
+# Simply open index.html in your browser
 # Or serve it:
-cd frontend
 python -m http.server 5173
 # Open http://localhost:5173
 ```
 
-## 📖 Architecture
+### Option 2: Docker
+
+```bash
+docker compose up -d --build
+# Frontend: http://localhost:8080
+# API:      http://localhost:8000
+# Swagger:  http://localhost:8000/docs
+```
+
+---
+
+## 🏗️ Architecture
 
 ```
 project-analyzer/
 ├── backend/
 │   ├── app/
-│   │   ├── analyzer.py              # Main orchestrator
-│   │   ├── main.py                  # FastAPI app + CLI entry
-│   │   ├── api/routes.py            # API endpoints
+│   │   ├── analyzer.py              # Main orchestrator (runs all 9 modules)
+│   │   ├── main.py                  # FastAPI app + CLI entry point
+│   │   ├── api/routes.py            # REST API endpoints
 │   │   ├── analyzers/
 │   │   │   ├── architecture.py      # Language/framework detection
-│   │   │   ├── dependencies.py      # Dependency scanning
+│   │   │   ├── dependencies.py      # Dependency scanning & CVE check
 │   │   │   ├── security.py          # Secret/credential detection
-│   │   │   ├── vulnerabilities.py   # Vulnerability patterns
+│   │   │   ├── vulnerabilities.py   # Vulnerability pattern matching
 │   │   │   ├── code_quality.py      # Complexity, duplication metrics
 │   │   │   ├── git_analyzer.py      # Git history analysis
 │   │   │   ├── performance.py       # Performance anti-patterns
@@ -90,41 +121,130 @@ project-analyzer/
 │   └── requirements.txt
 ├── frontend/
 │   ├── index.html                   # Dashboard UI
-│   ├── style.css                    # Dark-theme styles
-│   └── app.js                       # Frontend logic
+│   ├── style.css                    # Dark-theme responsive styles
+│   └── app.js                       # Frontend logic (800+ lines)
+├── docker-compose.yml
 └── README.md
 ```
 
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Project Analyzer                       │
+│                                                           │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
+│  │ 📐 Arch  │  │ 🔐 Sec   │  │ 🛡 Vuln  │  │ 📊 Qual  │ │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘ │
+│       │              │              │              │       │
+│  ┌────┴─────┐  ┌────┴─────┐  ┌────┴─────┐  ┌────┴─────┐ │
+│  │ 📦 Deps  │  │ 📈 Git   │  │ ⚡ Perf  │  │ 🤖 AI    │ │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘ │
+│       │              │              │              │       │
+│       └──────────────┴──────┬───────┴──────────────┘       │
+│                             ▼                              │
+│                    📋 Executive Report                     │
+│                    Score: 0-100                            │
+│                    Prioritized Actions                     │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## 🎯 Scoring System
 
-The executive report scores each category on a 0-10 scale:
+The executive report scores each category on a **0-10** scale:
 
-| Score | Rating |
-|-------|--------|
-| 90-100 | 🟢 EXCELLENT |
-| 75-89 | 🔵 GOOD |
-| 60-74 | 🟡 FAIR |
-| 40-59 | 🟠 POOR |
-| 0-39 | 🔴 CRITICAL |
+| Score | Rating | Meaning |
+|-------|--------|---------|
+| 90-100 | 🟢 **EXCELLENT** | Production-ready, best practices followed |
+| 75-89 | 🔵 **GOOD** | Solid codebase with minor improvements needed |
+| 60-74 | 🟡 **FAIR** | Functional but needs attention in key areas |
+| 40-59 | 🟠 **POOR** | Significant issues that should be addressed |
+| 0-39 | 🔴 **CRITICAL** | Major problems requiring immediate action |
 
-## 🔧 Supported Languages
+---
 
-Python, JavaScript, TypeScript, Java, Go, Rust, C#, C++, Ruby, PHP, Swift, Kotlin, Dart
+## 🛠️ Supported Languages & Frameworks
 
-## 📦 Supported Dependency Files
+### Languages
+Python · JavaScript · TypeScript · Java · Go · Rust · C# · C++ · Ruby · PHP · Swift · Kotlin · Dart
 
-package.json, requirements.txt, Pipfile, pyproject.toml, Cargo.toml, pom.xml, build.gradle, go.mod, Gemfile, composer.json, pubspec.yaml, *.csproj
+### Dependency Files
+`package.json` · `requirements.txt` · `Pipfile` · `pyproject.toml` · `Cargo.toml` · `pom.xml` · `build.gradle` · `go.mod` · `Gemfile` · `composer.json` · `pubspec.yaml` · `*.csproj`
 
-## 🛡️ Security Patterns Detected
+### Security Patterns Detected
+API Keys (OpenAI, Anthropic, Stripe, Slack, etc.) · AWS/GCP/Azure credentials · GitHub tokens · Bearer tokens & JWTs · Database connection strings · Passwords & private keys · Firebase configuration
 
-- API Keys (OpenAI, Anthropic, Stripe, Slack, etc.)
-- AWS/GCP/Azure credentials
-- GitHub tokens
-- Bearer tokens & JWTs
-- Database connection strings
-- Passwords & private keys
-- Firebase configuration
+---
 
-## 📊 License
+## 🐳 Docker
 
-MIT
+```yaml
+# docker-compose.yml
+services:
+  api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+```
+
+```bash
+docker compose up -d --build
+```
+
+---
+
+## 📖 API Reference
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/analyze` | POST | Full project analysis |
+| `/api/quick-scan` | POST | Security-only scan |
+| `/api/health` | GET | Health check |
+| `/api/supported-files` | GET | Supported languages & files |
+| `/docs` | GET | Swagger UI documentation |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:8000/api/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"path": "/path/to/project"}'
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🔧 Built With
+
+- **Backend:** Python 3.11+, FastAPI, Pydantic, GitPython
+- **Frontend:** Vanilla JS, HTML5, CSS3 (no framework dependencies)
+- **Infrastructure:** Docker, Nginx
+
+---
+
+*Built with ❤️ by [Alejo Fernandez](https://github.com/Fernandezalejo1)*
