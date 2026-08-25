@@ -14,10 +14,14 @@
 
 > 🚀 **Try it live:** Run `docker compose up -d --build` and open [http://localhost:8080](http://localhost:8080)
 
-<!-- Add screenshots here -->
-<!-- ![Dashboard](docs/screenshots/01-dashboard.png) -->
-<!-- ![Security Scan](docs/screenshots/02-security.png) -->
-<!-- ![Executive Report](docs/screenshots/03-executive-report.png) -->
+![Dashboard — Home](docs/screenshots/01-home.png)
+*Home screen with project path input and scan buttons*
+
+![Full Analysis](docs/screenshots/02-full-scan.png)
+*Full analysis results with executive summary and category scores*
+
+![Swagger API Docs](docs/screenshots/03-swagger.png)
+*Interactive API documentation at /docs*
 
 ---
 
