@@ -5,8 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688.svg)](https://fastapi.tiangolo.com/)
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)](#testing)
-[![Docker](https://img.shields.io/badge/docker-ready-2496ED.svg)](#docker)
+[![Tests](https://img.shields.io/badge/tests-28%20passed-brightgreen)](https://github.com/Fernandezalejo1/project-analyzer/tree/master/backend/tests)
+[![Docker](https://img.shields.io/badge/docker-compose-2496ED.svg)](https://docs.docker.com/compose/)
 
 ---
 
@@ -97,7 +97,31 @@ docker compose up -d --build
 # Frontend: http://localhost:8080
 # API:      http://localhost:8000
 # Swagger:  http://localhost:8000/docs
+
+# Analizar un repo que está en tu máquina (montado como volumen de solo lectura)
+docker compose run --rm -v "/ruta/a/mi-proyecto:/scan:ro" api python -m app.main /scan
 ```
+
+---
+
+## 🧪 Testing
+
+28 tests cubren los analyzers con proyectos de ejemplo armados en directorios
+temporales: secretos filtrados, SQL por f-string, `eval(input())`, `os.system`,
+criptografía débil, imports sin usar y directorios sin repo git.
+
+```bash
+cd backend
+python -m pytest                      # 28 passed
+python -m pytest -q tests/test_security_vulnerabilities.py
+```
+
+Los tests no tocan tu código ni la red: cada caso crea un mini-proyecto en
+`tmp_path` y verifica qué debe **y qué no debe** reportar cada analyzer. Ejemplos:
+
+- un `.env` real es una fuga; `.env.example` no lo es (plantilla versionable);
+- `conn.execute(f"SELECT ... {uid}")` se marca como SQL Injection;
+- un proyecto trivial no debe generar hallazgos de performance.
 
 ---
 

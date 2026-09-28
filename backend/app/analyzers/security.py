@@ -131,7 +131,9 @@ SECRET_PATTERNS: list[dict[str, str | Severity | list[str]]] = [
 
 SENSITIVE_FILE_PATTERNS: list[str] = [
     r"(?i)\.env$",
-    r"(?i)\.env\.\w+$",
+    # .env.example / .sample / .template son plantillas versionables:
+    # reportarlas como fuga sería un falso positivo en casi todo repo.
+    r"(?i)\.env\.(?!example$|sample$|template$)\w+$",
     r"(?i)\.env\.local$",
     r"(?i)\.env\.production$",
     r"(?i)\.env\.development$",

@@ -1,0 +1,47 @@
+# Project Analyzer — stack local
+#
+#   docker compose up -d --build
+#   -> UI:      http://localhost:8080
+#   -> API:     http://localhost:8000/api  (Swagger en /docs)
+#
+# Para analizar un repo que está en tu máquina, montalo como volumen de solo
+# lectura y pasá la ruta:
+#
+#   docker compose run --rm -v "D:/mi-proyecto:/scan:ro" api \
+#     python -m app.main /scan
+#
+# (en Git Bash, prefijá la ruta con // para evitar la conversión de rutas)
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: project-analyzer:local
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/').status==200 else 1)"
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  web:
+    image: python:3.12-slim
+    working_dir: /site
+    command: python -m http.server 8080 --bind 0.0.0.0
+    volumes:
+      - ./frontend:/site:ro
+    ports:
+      - "8080:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped

@@ -18,9 +18,19 @@ dependencies = [
     "rich>=13.8.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
 [project.scripts]
 analyzer = "app.main:cli_main"
 
 [build-system]
 requires = ["setuptools>=75.0"]
-build-backend = "setuptools.backends._legacy:_Backend"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

@@ -28,6 +28,10 @@ VULNERABILITY_PATTERNS: list[dict[str, str | Severity | list[str]]] = [
             r"""(?:query|execute)\s*\(\s*['"]\s*(?:SELECT|INSERT|UPDATE|DELETE).*\$\{""",
             r"""(?:query|execute)\s*\(\s*`.*\$\{.*\}.*(?:SELECT|INSERT|UPDATE|DELETE)""",
             r"""\.query\s*\(\s*['"].*\+\s*\w+""",
+            # F-string con SQL interpolado, incluso cuando la query se arma
+            # en una variable y se ejecuta después (patrón muy común).
+            r"""(?i)f['"][^'"]*(?:SELECT|INSERT|UPDATE|DELETE)\s[^'"]*\{""",
+            r"""(?i)f['"][^'"]*\{[^}]+\}[^'"]*(?:SELECT|INSERT|UPDATE|DELETE)\s""",
             # Generic
             r"""(?:SELECT|INSERT|UPDATE|DELETE)\s+.*['"]\s*\+\s*\w+""",
             r"""(?:SELECT|INSERT|UPDATE|DELETE)\s+.*\$\{""",
