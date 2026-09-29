@@ -2,6 +2,7 @@
 
 > **Scan any codebase in seconds.** Get a complete audit of architecture, security, vulnerabilities, code quality, dependencies, performance — with an AI-powered executive summary and prioritized action items.
 
+[![CI](https://github.com/Fernandezalejo1/project-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/Fernandezalejo1/project-analyzer/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688.svg)](https://fastapi.tiangolo.com/)
