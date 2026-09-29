@@ -18,11 +18,6 @@
 ![Dashboard — Home](docs/screenshots/01-home.png)
 *Home screen with project path input and scan buttons*
 
-![Full Analysis](docs/screenshots/02-full-scan.png)
-*Full analysis results with executive summary and category scores*
-
-![Swagger API Docs](docs/screenshots/03-swagger.png)
-*Interactive API documentation at /docs*
 
 ---
 
